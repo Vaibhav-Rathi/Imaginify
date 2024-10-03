@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@radix-ui/react-select": "^2.1.2",
+    "@radix-ui/react-toast": "^1.2.2",
     "@types/node": "^20",
     "@types/qs": "^6.9.16",
     "@types/react": "^18.3.11",
