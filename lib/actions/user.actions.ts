@@ -12,10 +12,13 @@ export async function createUser(user: CreateUserParams) {
     await connectToDatabase();
 
     const newUser = await User.create(user);
+    console.log("User created successfully:", newUser);
 
     return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
+    console.error("Error creating user:", error);
     handleError(error);
+    throw new Error("User creation failed");
   }
 }
 
@@ -30,7 +33,9 @@ export async function getUserById(userId: string) {
 
     return JSON.parse(JSON.stringify(user));
   } catch (error) {
+    console.error("Error retrieving user:", error);
     handleError(error);
+    throw new Error("User retrieval failed");
   }
 }
 
@@ -44,10 +49,13 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
     });
 
     if (!updatedUser) throw new Error("User update failed");
-    
+
+    console.log("User updated successfully:", updatedUser);
     return JSON.parse(JSON.stringify(updatedUser));
   } catch (error) {
+    console.error("Error updating user:", error);
     handleError(error);
+    throw new Error("User update failed");
   }
 }
 
@@ -67,9 +75,12 @@ export async function deleteUser(clerkId: string) {
     const deletedUser = await User.findByIdAndDelete(userToDelete._id);
     revalidatePath("/");
 
+    console.log("User deleted successfully:", deletedUser);
     return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null;
   } catch (error) {
+    console.error("Error deleting user:", error);
     handleError(error);
+    throw new Error("User deletion failed");
   }
 }
 
@@ -82,12 +93,15 @@ export async function updateCredits(userId: string, creditFee: number) {
       { _id: userId },
       { $inc: { creditBalance: creditFee }},
       { new: true }
-    )
+    );
 
-    if(!updatedUserCredits) throw new Error("User credits update failed");
+    if (!updatedUserCredits) throw new Error("User credits update failed");
 
+    console.log("User credits updated successfully:", updatedUserCredits);
     return JSON.parse(JSON.stringify(updatedUserCredits));
   } catch (error) {
+    console.error("Error updating user credits:", error);
     handleError(error);
+    throw new Error("User credits update failed");
   }
 }
