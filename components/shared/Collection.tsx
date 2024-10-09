@@ -1,10 +1,10 @@
+
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { CldImage } from "next-cloudinary";
-
 import {
   Pagination,
   PaginationContent,
@@ -14,16 +14,14 @@ import {
 import { transformationTypes } from "@/constants";
 import { IImage } from "@/lib/database/models/image.model";
 import { formUrlQuery } from "@/lib/utils";
-
 import { Button } from "../ui/button";
-
 import { Search } from "./Search";
 
 export const Collection = ({
-  hasSearch = false,
   images,
   totalPages = 1,
   page,
+  hasSearch = false,
 }: {
   images: IImage[];
   totalPages?: number;
@@ -114,9 +112,7 @@ const Card = ({ image }: { image: IImage }) => {
           </p>
           <Image
             src={`/assets/icons/${
-              transformationTypes[
-                image.transformationType as TransformationTypeKey
-              ].icon
+              transformationTypes[image.transformationType as keyof typeof transformationTypes].icon
             }`}
             alt={image.title}
             width={24}
